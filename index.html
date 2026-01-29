@@ -111,8 +111,9 @@
             	    if (btn.disabled) return;
 
                 btn.disabled = true;
-
     
+	//Bye bye TOCTOU!
+
             // 1. Increment request counter (Simulates server load)
             activeRequests++;
     
@@ -179,9 +180,19 @@
         }
 
         function updateQty(index, val) {
-            // VULNERABILITY
-            cart[index].qty = parseInt(val);
+            let cleanVal = parseInt(val);
+
+            if (cleanVal < 1) {
+                alert("Quantity must be at least 1");
+                cleanVal = 1;
+            }
+
+            cart[index].qty = cleanVal;
             updateCart();
+
+	//Vuln2 should be eliminated...
+        }
+
         }
 
         // ---------------------------------------------------------
