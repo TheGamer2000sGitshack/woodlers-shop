@@ -189,8 +189,6 @@
 
             cart[index].qty = cleanVal;
             updateCart();
-
-	
         }
 
         }
@@ -203,13 +201,9 @@
             const resultDiv = document.getElementById('shipping-result');
             
             // Reset counter if it's been more than 5 seconds
-            if (now - lastApiHit < 2000) {
-                resultDiv.innerText = "Please wait before calculating again!";
-                return;
+            if (now - lastApiHit > 5000) {
+                apiHits = 0;
             }
-
-	//NO MORE API EXPLOSION!!!
-
             lastApiHit = now;
             apiHits++;
 
