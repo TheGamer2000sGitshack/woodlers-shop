@@ -111,8 +111,9 @@
             	    if (btn.disabled) return;
 
                 btn.disabled = true;
-
     
+	//Bye bye TOCTOU!
+
             // 1. Increment request counter (Simulates server load)
             activeRequests++;
     
