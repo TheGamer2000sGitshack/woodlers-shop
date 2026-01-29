@@ -1,3 +1,5 @@
+//BUGFIX BY TG2000, 1/29/2026
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -104,6 +106,12 @@
 
         async function attemptPurchase(id, name, price) {
             const msgEl = document.getElementById(`msg-${id}`);
+
+	const btn = document.getElementById(`btn-${id}`);
+            	    if (btn.disabled) return;
+
+                btn.disabled = true;
+
     
             // 1. Increment request counter (Simulates server load)
             activeRequests++;
