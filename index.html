@@ -107,7 +107,12 @@
         async function attemptPurchase(id, name, price) {
             const msgEl = document.getElementById(`msg-${id}`);
 
+	const btn = document.getElementById(`btn-${id}`);
+            	    if (btn.disabled) return;
 
+                btn.disabled = true;
+
+    
             // 1. Increment request counter (Simulates server load)
             activeRequests++;
     
@@ -174,19 +179,9 @@
         }
 
         function updateQty(index, val) {
-            let cleanVal = parseInt(val);
-
-            if (cleanVal < 1) {
-                alert("Quantity must be at least 1");
-                cleanVal = 1;
-            }
-
-            cart[index].qty = cleanVal;
+            // VULNERABILITY
+            cart[index].qty = parseInt(val);
             updateCart();
-
-	
-        }
-
         }
 
         // ---------------------------------------------------------
@@ -197,13 +192,9 @@
             const resultDiv = document.getElementById('shipping-result');
             
             // Reset counter if it's been more than 5 seconds
-            if (now - lastApiHit < 2000) {
-                resultDiv.innerText = "Please wait before calculating again!";
-                return;
+            if (now - lastApiHit > 5000) {
+                apiHits = 0;
             }
-
-	//NO MORE API EXPLOSION!!!
-
             lastApiHit = now;
             apiHits++;
 
