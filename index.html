@@ -190,7 +190,8 @@
             cart[index].qty = cleanVal;
             updateCart();
         }
-
+	
+	//THIS SHOULD FIX VULN2...
 
         // ---------------------------------------------------------
         // VULNERABILITY #3: API RESOURCE EXHAUSTION
@@ -200,9 +201,13 @@
             const resultDiv = document.getElementById('shipping-result');
             
             // Reset counter if it's been more than 5 seconds
-            if (now - lastApiHit > 5000) {
-                apiHits = 0;
+            if (now - lastApiHit < 2000) {
+                resultDiv.innerText = "Please wait before calculating again!";
+                return;
             }
+	
+	//NO MORE API EXPLOSION!
+
             lastApiHit = now;
             apiHits++;
 
