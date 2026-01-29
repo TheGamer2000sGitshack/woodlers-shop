@@ -107,12 +107,6 @@
         async function attemptPurchase(id, name, price) {
             const msgEl = document.getElementById(`msg-${id}`);
 
-	const btn = document.getElementById(`btn-${id}`);
-            	    if (btn.disabled) return;
-
-                btn.disabled = true;
-    
-	//Bye bye TOCTOU!
 
             // 1. Increment request counter (Simulates server load)
             activeRequests++;
@@ -189,6 +183,8 @@
 
             cart[index].qty = cleanVal;
             updateCart();
+
+	
         }
 
         }
@@ -201,9 +197,13 @@
             const resultDiv = document.getElementById('shipping-result');
             
             // Reset counter if it's been more than 5 seconds
-            if (now - lastApiHit > 5000) {
-                apiHits = 0;
+            if (now - lastApiHit < 2000) {
+                resultDiv.innerText = "Please wait before calculating again!";
+                return;
             }
+
+	//NO MORE API EXPLOSION!!!
+
             lastApiHit = now;
             apiHits++;
 
